@@ -34,12 +34,7 @@ public class Assignment2 {
 		System.out.println("----------------------------------------------------------");
 		FoodItem burger = new FoodItem("Burger", 2.0, 250, 300, 0);
 		FoodItem taco = new FoodItem("Taco", 3.5, 500, 200, 0);
-		FoodItem hotdog = new FoodItem("Hot dog", 2.5, 150, 250,0);
-		FoodItem pizza = new FoodItem("pizza", 4.0, 330, 550, 0);
 		FoodItem sandwich = new FoodItem("Sandwich", 2.5, 650, 400, 0);
-	    FoodItem coke =new FoodItem("Coke",1.5, 300, 150, 0);
-	    FoodItem tea =new FoodItem("tea",2.0, 100, 100, 0);
-	    FoodItem water =new FoodItem("water",1.0, 90, 0, 0);
 	    System.out.println("----------------------------------------------------------");
 		
 	    FoodItem[]luncharray ={burger, taco, sandwich, hotdog, pizza,coke,tea, water};
@@ -115,31 +110,6 @@ public class Assignment2 {
 					System.out.println("How many sandwiches do you need? ");
 					quantity = console.nextInt();
 					sandwich.update_quantity(quantity);				
-				}
-				else if (c.equals("hotdog")){
-					System.out.println("How many hot dogs do you need? ");
-					quantity = console.nextInt();
-					hotdog.update_quantity(quantity);		
-				}
-				else if (c.equals("pizza")){
-					System.out.println("How many pizza slices do you need? ");
-					quantity = console.nextInt();
-					pizza.update_quantity(quantity);	
-				}
-				else if (c.equals("coke")){
-					System.out.println("How many bottoles of Coke do you need? ");
-					quantity = console.nextInt();
-					coke.update_quantity(quantity);	
-				}
-				else if (c.equals("tea")){
-					System.out.println("How many cups of tea do you need? ");
-					quantity = console.nextInt();
-					tea.update_quantity(quantity);	
-				}
-				else if(c.equals("water")){
-					System.out.println("How many bottoles of water do you need? ");
-					quantity = console.nextInt();
-					water.update_quantity(quantity);	
 				}
 				else {
 					System.out.println("Sorry, please try again.");
