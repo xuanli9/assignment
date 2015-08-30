@@ -1,0 +1,236 @@
+import java.io.PrintStream;
+import java.util.Scanner;
+
+public class Project2
+{
+  public static void main(String[] args)
+  {
+    Scanner console = new Scanner(System.in);
+    
+    FoodItem burger = new FoodItem("Burger", 3.0D, 300, 0);
+    
+    FoodItem taco = new FoodItem("Taco", 2.0D, 250, 0);
+    
+    FoodItem sandwich = new FoodItem("Sandwich", 4.0D, 180, 0);
+    
+    FoodItem[] lunchTray = { burger, taco, sandwich };
+    
+    boolean goon = true;
+    int choice = 0;
+    while (goon)
+    {
+      System.out.println("\n--------------------------");
+      System.out.println("--------------------------");
+      System.out.println("Press 1 for the menu: ");
+      System.out.println("Press 2 to search: ");
+      System.out.println("Press 3 to order: ");
+      System.out.println("Any other digit to quit: ");
+      System.out.println("--------------------------");
+      System.out.println("--------------------------");
+      choice = Integer.parseInt(console.nextLine());
+      if (choice == 1)
+      {
+        displayMenu(lunchTray, console);
+      }
+      else if (choice == 2)
+      {
+        searchItem(lunchTray, console);
+      }
+      else if (choice == 3)
+      {
+        ordering(lunchTray, console);
+      }
+      else
+      {
+        System.out.println("Thank you. Come back again.");
+        goon = false;
+      }
+    }
+    console.close();
+  }
+  
+  public static void ordering(FoodItem[] myTray, Scanner myConsole)
+  {
+    boolean purchasing = true;
+    int selected_option = 0;
+    int ordered_quantity = 0;
+    while (purchasing)
+    {
+      System.out.println("\n\n--------------------------");
+      System.out.println("Press 1 for Burgers: ");
+      System.out.println("Press 2 for Tacos: ");
+      System.out.println("Press 3 for Sandwiches: ");
+      System.out.println("Any other digit to quit: ");
+      System.out.println("--------------------------");
+      selected_option = Integer.parseInt(myConsole.nextLine());
+      FoodItem[] arrayOfFoodItem1;
+      int j;
+      int i;
+      if (selected_option == 1)
+      {
+        System.out.println("How many do you need? ");
+        ordered_quantity = Integer.parseInt(myConsole.nextLine());
+        
+        arrayOfFoodItem1 = myTray;j = myTray.length;
+        for (i = 0; i < j; i++)
+        {
+          FoodItem f = arrayOfFoodItem1[i];
+          if (f.get_name().equals("Burger")) {
+            f.update_quantity(ordered_quantity);
+          }
+        }
+      }
+      else if (selected_option == 2)
+      {
+        System.out.println("How many Tacos do you need? ");
+        ordered_quantity = Integer.parseInt(myConsole.nextLine());
+        
+        arrayOfFoodItem1 = myTray;j = myTray.length;
+        for (i = 0; i < j; i++)
+        {
+          FoodItem f = arrayOfFoodItem1[i];
+          if (f.get_name().equals("Taco")) {
+            f.update_quantity(ordered_quantity);
+          }
+        }
+      }
+      else if (selected_option == 3)
+      {
+        System.out.println("How many sandwiches do you need? ");
+        ordered_quantity = Integer.parseInt(myConsole.nextLine());
+        arrayOfFoodItem1 = myTray;j = myTray.length;
+        for (i = 0; i < j; i++)
+        {
+          FoodItem f = arrayOfFoodItem1[i];
+          if (f.get_name().equals("Sandwich")) {
+            f.update_quantity(ordered_quantity);
+          }
+        }
+      }
+      else
+      {
+        purchasing = false;
+      }
+    }
+    double total = 0.0D;
+    
+    FoodItem[] arrayOfFoodItem2 = myTray;int m = myTray.length;
+    for (int k = 0; k < m; k++)
+    {
+      FoodItem f = arrayOfFoodItem2[k];
+      
+      total += f.sub_total();
+    }
+    System.out.println();
+    System.out.printf("%15s%15s%15s%15s\n", new Object[] { "Items", "Price", "Quantity", "Sub_total" });
+    System.out.println("-------------------------------------------------------------");
+    for (int i = 0; i < myTray.length; i++) {
+      if (myTray[i].get_quantity() != 0) {
+        System.out.printf("%15s%15.2f%15d%15.2f\n", new Object[] { myTray[i].get_name(), Double.valueOf(myTray[i].get_price()), Integer.valueOf(myTray[i].get_quantity()), Double.valueOf(myTray[i].get_price() * myTray[i].get_quantity()) });
+      }
+    }
+    System.out.println("-------------------------------------------------------------");
+    System.out.println("Total charge is $" + total + ".");
+  }
+  
+  public static void displayMenu(FoodItem[] lunchItems, Scanner myConsole)
+  {
+    System.out.println("To see the menu:");
+    System.out.println("Press n by name, p by price, c by calorie");
+    String list_choice = myConsole.nextLine();
+    FoodItem[] arrayOfFoodItem;
+    if (list_choice.equals("n"))
+    {
+      for (int i = 0; i < lunchItems.length - 1; i++) {
+        for (j = i + 1; j < lunchItems.length; j++) {
+          if (lunchItems[i].get_name().compareTo(lunchItems[j].get_name()) > 0)
+          {
+            temp = lunchItems[i];
+            lunchItems[i] = lunchItems[j];
+            lunchItems[j] = temp;
+          }
+        }
+      }
+      System.out.printf("%15s%8s%6s\n", new Object[] { "Name", "Price", "Cal" });
+      System.out.println("-----------------------------");
+      arrayOfFoodItem = lunchItems;FoodItem temp = lunchItems.length;
+      for (int j = 0; j < temp; j++)
+      {
+        FoodItem f = arrayOfFoodItem[j];
+        System.out.printf("%15s%8.2f%6d\n", new Object[] { f.get_name(), Double.valueOf(f.get_price()), Integer.valueOf(f.get_calorie()) });
+      }
+    }
+    else if (list_choice.equals("c"))
+    {
+      for (int i = 0; i < lunchItems.length - 1; i++) {
+        for (j = i + 1; j < lunchItems.length; j++) {
+          if (lunchItems[i].get_calorie() > lunchItems[j].get_calorie())
+          {
+            temp = lunchItems[i];
+            lunchItems[i] = lunchItems[j];
+            lunchItems[j] = temp;
+          }
+        }
+      }
+      System.out.printf("%15s%8s%6s\n", new Object[] { "Name", "Price", "Cal" });
+      System.out.println("-----------------------------");
+      arrayOfFoodItem = lunchItems;FoodItem temp = lunchItems.length;
+      for (int j = 0; j < temp; j++)
+      {
+        FoodItem f = arrayOfFoodItem[j];
+        System.out.printf("%15s%8.2f%6d\n", new Object[] { f.get_name(), Double.valueOf(f.get_price()), Integer.valueOf(f.get_calorie()) });
+      }
+    }
+    else if (list_choice.equals("p"))
+    {
+      for (int i = 0; i < lunchItems.length - 1; i++) {
+        for (j = i + 1; j < lunchItems.length; j++) {
+          if (lunchItems[i].get_price() > lunchItems[j].get_price())
+          {
+            temp = lunchItems[i];
+            lunchItems[i] = lunchItems[j];
+            lunchItems[j] = temp;
+          }
+        }
+      }
+      System.out.printf("%15s%8s%6s\n", new Object[] { "Name", "Price", "Cal" });
+      System.out.println("-----------------------------");
+      arrayOfFoodItem = lunchItems;FoodItem temp = lunchItems.length;
+      for (int j = 0; j < temp; j++)
+      {
+        FoodItem f = arrayOfFoodItem[j];
+        System.out.printf("%15s%8.2f%6d\n", new Object[] { f.get_name(), Double.valueOf(f.get_price()), Integer.valueOf(f.get_calorie()) });
+      }
+    }
+    else
+    {
+      System.out.println("\nWrong choice!\n\n");
+    }
+  }
+  
+  public static void searchItem(FoodItem[] lunchItems, Scanner myConsole)
+  {
+    boolean found = false;
+    int found_index = 0;
+    
+    System.out.printf("What would you like have?", new Object[0]);
+    String foodChoice = myConsole.nextLine();
+    for (int i = 0; i < lunchItems.length; i++) {
+      if (lunchItems[i].get_name().equals(foodChoice))
+      {
+        found = true;
+        found_index = i;
+      }
+    }
+    if (found)
+    {
+      System.out.printf("%15s%8s%6s\n", new Object[] { "Name", "Price", "Cal" });
+      System.out.println("-----------------------------");
+      System.out.printf("%15s%8.2f%6d\n", new Object[] { lunchItems[found_index].get_name(), Double.valueOf(lunchItems[found_index].get_price()), Integer.valueOf(lunchItems[found_index].get_calorie()) });
+    }
+    else
+    {
+      System.out.println("Sorry, we do not sell ." + foodChoice + ".");
+    }
+  }
+}
